@@ -1,18 +1,17 @@
 package com.smarthealth.controller;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
-import com.smarthealth.dao.AppointmentDao;
-import com.smarthealth.dao.DoctorDao;
-import com.smarthealth.dao.PatientDao;
-import com.smarthealth.model.Appointment;
-import com.smarthealth.model.PatientProfile;
-import com.smarthealth.model.User;
+import com.smarthealth.dao.*;
+import com.smarthealth.model.*;
 import com.smarthealth.util.AuthUtil;
+import com.smarthealth.util.DBExchange;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -25,6 +24,10 @@ public class PatientDashboardServlet extends HttpServlet {
     private final DoctorDao doctorDao = new DoctorDao();
     private final AppointmentDao appointmentDao = new AppointmentDao();
     private final PatientDao patientDao = new PatientDao();
+    private final MedicalRecordDao medicalRecordDao = new MedicalRecordDao();
+    private final PrescriptionDao prescriptionDao = new PrescriptionDao();
+    private final InsuranceDao insuranceDao = new InsuranceDao();
+    private final InvoiceDao invoiceDao = new InvoiceDao();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,7 +36,12 @@ public class PatientDashboardServlet extends HttpServlet {
             return;
         }
 
+        // Auto sync
+        DBExchange.sync();
+
         User user = AuthUtil.getSessionUser(req);
+        int patientTableId = DBExchange.getPatientIdByUserId(user.getId());
+
         try {
             req.setAttribute("doctors", doctorDao.listAll());
             req.setAttribute("appointments", appointmentDao.listByPatient(user.getId()));
@@ -44,6 +52,13 @@ public class PatientDashboardServlet extends HttpServlet {
                 profile = patientDao.findByUserId(user.getId());
             }
             req.setAttribute("profile", profile);
+
+            if (patientTableId != -1) {
+                req.setAttribute("medicalRecords", medicalRecordDao.listByPatient(patientTableId));
+                req.setAttribute("prescriptions", prescriptionDao.listByPatient(patientTableId));
+                req.setAttribute("insuranceList", insuranceDao.listByPatient(patientTableId));
+                req.setAttribute("invoices", invoiceDao.listByPatient(patientTableId));
+            }
         } catch (SQLException ex) {
             req.setAttribute("error", ex.getMessage());
         }
@@ -58,7 +73,11 @@ public class PatientDashboardServlet extends HttpServlet {
             return;
         }
 
+        // Auto sync
+        DBExchange.sync();
+
         User user = AuthUtil.getSessionUser(req);
+        int patientTableId = DBExchange.getPatientIdByUserId(user.getId());
         String action = req.getParameter("action");
 
         try {
@@ -67,9 +86,14 @@ public class PatientDashboardServlet extends HttpServlet {
                 case "updateProfile" -> updateProfile(req, user.getId());
                 case "cancel" -> cancel(req, user.getId());
                 case "reschedule" -> reschedule(req, user.getId());
+                case "addInsurance" -> addInsurance(req, patientTableId);
+                case "deleteInsurance" -> deleteInsurance(req);
+                case "payInvoice" -> payInvoice(req);
                 default -> req.getSession().setAttribute("flashError", "Unknown action.");
             }
-            req.getSession().setAttribute("flashSuccess", "Action completed successfully.");
+            if (req.getSession().getAttribute("flashError") == null) {
+                req.getSession().setAttribute("flashSuccess", "Action completed successfully.");
+            }
         } catch (SQLException | IllegalArgumentException | DateTimeParseException ex) {
             req.getSession().setAttribute("flashError", "Action failed: " + ex.getMessage());
         }
@@ -101,6 +125,7 @@ public class PatientDashboardServlet extends HttpServlet {
             profile.setAge(Integer.parseInt(age));
         }
         patientDao.saveOrUpdate(profile);
+        DBExchange.sync(); // Propagate change to patients table
     }
 
     private void cancel(HttpServletRequest req, int patientId) throws SQLException {
@@ -112,5 +137,37 @@ public class PatientDashboardServlet extends HttpServlet {
         int appointmentId = Integer.parseInt(req.getParameter("appointmentId"));
         Date newDate = Date.valueOf(req.getParameter("newDate"));
         appointmentDao.rescheduleByPatient(appointmentId, patientId, newDate);
+    }
+
+    private void addInsurance(HttpServletRequest req, int patientId) throws SQLException {
+        if (patientId == -1) {
+            throw new IllegalArgumentException("No patient record found to link insurance policy.");
+        }
+        Insurance ins = new Insurance();
+        ins.setPatientId(patientId);
+        ins.setProviderName(req.getParameter("providerName"));
+        ins.setPolicyNumber(req.getParameter("policyNumber"));
+        ins.setGroupNumber(req.getParameter("groupNumber"));
+        ins.setHolderName(req.getParameter("holderName"));
+        ins.setValidFrom(LocalDate.parse(req.getParameter("validFrom")));
+        String validTo = req.getParameter("validTo");
+        if (validTo != null && !validTo.isBlank()) {
+            ins.setValidTo(LocalDate.parse(validTo));
+        }
+        ins.setCoverageLimit(new BigDecimal(req.getParameter("coverageLimit")));
+        ins.setPrimary(req.getParameter("isPrimary") != null);
+        ins.setActive(true);
+        insuranceDao.create(ins);
+    }
+
+    private void deleteInsurance(HttpServletRequest req) throws SQLException {
+        int insId = Integer.parseInt(req.getParameter("insuranceId"));
+        insuranceDao.delete(insId);
+    }
+
+    private void payInvoice(HttpServletRequest req) throws SQLException {
+        int invoiceId = Integer.parseInt(req.getParameter("invoiceId"));
+        String paymentMethod = req.getParameter("paymentMethod");
+        invoiceDao.updatePayment(invoiceId, "paid", paymentMethod, LocalDateTime.now());
     }
 }
