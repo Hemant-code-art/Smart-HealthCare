@@ -650,7 +650,7 @@
                                             <p>Stay on top of your schedule with patient details, status tracking, and
                                                 updates in one place.</p>
                                             <div class="hero-btn-row">
-                                                <a href="#appointments" class="btn-hero-primary">View Appointments</a>
+                                                 <a href="${pageContext.request.contextPath}/doctor/appointments" class="btn-hero-primary">View Appointments</a>
                                                 <a href="#todays-schedule" class="btn-hero-ghost">Today's Schedule</a>
                                             </div>
                                         </section>
@@ -703,7 +703,7 @@
                                                             upcoming appointment</div>
                                                         <div class="ic-sub">Your schedule is clear.</div>
                                                         <% } %>
-                                                            <a href="#appointments" class="ic-link">View all →</a>
+                                                            <a href="${pageContext.request.contextPath}/doctor/appointments" class="ic-link">View all →</a>
                                             </div>
 
                                             <!-- Today's Summary -->
@@ -804,6 +804,255 @@
                                                         <p style="color:#5e7c73;font-size:13.5px;">No appointments
                                                             assigned to you yet.</p>
                                                         <% } %>
+                                            </div>
+                                        </div>
+
+                                        <!-- Medical Records Section -->
+                                        <p class="section-label" style="margin-top: 32px;">Clinical Documentation (Medical Records)</p>
+                                        <div class="panel" id="medical-records" style="margin-bottom: 24px; padding: 24px; background: #ffffff; border-radius: 16px; border: 1.5px solid #d4e8e2;">
+                                            <h2>Patient Medical Records</h2>
+                                            
+                                            <!-- Form to log medical record -->
+                                            <div style="background: #fbfdfc; padding: 18px; border-radius: 12px; border: 1px solid #e0ebf0; margin-bottom: 20px;">
+                                                <h3 style="margin-bottom: 12px; font-size:15px; color:#0d6b55;">Log Medical Record</h3>
+                                                <form method="post" action="${pageContext.request.contextPath}/doctor/dashboard" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+                                                    <input type="hidden" name="action" value="createMedicalRecord">
+                                                    <div>
+                                                        <label style="font-size:12px; font-weight:600; color:#5e7c73;">Select Patient</label>
+                                                        <select name="patientId" required style="width:100%; border:1.5px solid #cfe0da; padding:6px; border-radius:8px; background: #fff !important; color: #0f3c2f !important;">
+                                                            <% 
+                                                            List<User> patientsTable = (List<User>) request.getAttribute("patientsTable");
+                                                            if (patientsTable != null) {
+                                                                for (User p : patientsTable) {
+                                                            %>
+                                                            <option value="<%= p.getId() %>"><%= p.getFullName() %> (<%= p.getEmail() %>)</option>
+                                                            <% 
+                                                                }
+                                                            } 
+                                                            %>
+                                                        </select>
+                                                    </div>
+                                                    <div>
+                                                        <label style="font-size:12px; font-weight:600; color:#5e7c73;">Chief Complaint</label>
+                                                        <input type="text" name="chiefComplaint" placeholder="e.g. Persistent cough for 3 days" required style="width:100%; border:1.5px solid #cfe0da; padding:6px; border-radius:8px; background: #fff !important; color: #0f3c2f !important;">
+                                                    </div>
+                                                    <div>
+                                                        <label style="font-size:12px; font-weight:600; color:#5e7c73;">Diagnosis</label>
+                                                        <input type="text" name="diagnosis" placeholder="e.g. Acute bronchitis" required style="width:100%; border:1.5px solid #cfe0da; padding:6px; border-radius:8px; background: #fff !important; color: #0f3c2f !important;">
+                                                    </div>
+                                                    <div>
+                                                        <label style="font-size:12px; font-weight:600; color:#5e7c73;">Treatment Plan</label>
+                                                        <input type="text" name="treatmentPlan" placeholder="e.g. Bronchodilators and rest" required style="width:100%; border:1.5px solid #cfe0da; padding:6px; border-radius:8px; background: #fff !important; color: #0f3c2f !important;">
+                                                    </div>
+                                                    <div>
+                                                        <label style="font-size:12px; font-weight:600; color:#5e7c73;">Vitals BP</label>
+                                                        <input type="text" name="vitalsBp" placeholder="120/80" value="120/80" style="width:100%; border:1.5px solid #cfe0da; padding:6px; border-radius:8px; background: #fff !important; color: #0f3c2f !important;">
+                                                    </div>
+                                                    <div>
+                                                        <label style="font-size:12px; font-weight:600; color:#5e7c73;">Vitals Temp (°F)</label>
+                                                        <input type="number" step="0.1" name="vitalsTemp" value="98.6" style="width:100%; border:1.5px solid #cfe0da; padding:6px; border-radius:8px; background: #fff !important; color: #0f3c2f !important;">
+                                                    </div>
+                                                    <div>
+                                                        <label style="font-size:12px; font-weight:600; color:#5e7c73;">Pulse (bpm)</label>
+                                                        <input type="number" name="vitalsPulse" value="72" style="width:100%; border:1.5px solid #cfe0da; padding:6px; border-radius:8px; background: #fff !important; color: #0f3c2f !important;">
+                                                    </div>
+                                                    <div>
+                                                        <label style="font-size:12px; font-weight:600; color:#5e7c73;">Weight (kg)</label>
+                                                        <input type="number" step="0.1" name="vitalsWeightKg" value="70.0" style="width:100%; border:1.5px solid #cfe0da; padding:6px; border-radius:8px; background: #fff !important; color: #0f3c2f !important;">
+                                                    </div>
+                                                    <div>
+                                                        <label style="font-size:12px; font-weight:600; color:#5e7c73;">Height (cm)</label>
+                                                        <input type="number" step="0.1" name="vitalsHeightCm" value="175.0" style="width:100%; border:1.5px solid #cfe0da; padding:6px; border-radius:8px; background: #fff !important; color: #0f3c2f !important;">
+                                                    </div>
+                                                    <div style="grid-column: span 2;">
+                                                        <label style="font-size:12px; font-weight:600; color:#5e7c73;">Clinical Notes</label>
+                                                        <input type="text" name="notes" placeholder="Additional details..." style="width:100%; border:1.5px solid #cfe0da; padding:6px; border-radius:8px; background: #fff !important; color: #0f3c2f !important;">
+                                                    </div>
+                                                    <div style="grid-column: 1 / -1; text-align: right; margin-top: 8px;">
+                                                        <button type="submit" style="background:#0d6b55; color:#fff; border:none; padding: 10px 24px; border-radius:8px; font-weight:bold; cursor:pointer;">Save Record</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                            <!-- Table of clinical records -->
+                                            <div style="overflow-x:auto;">
+                                                <table style="width:100%; border-collapse:collapse; text-align:left; font-size:13px; color:#0f3c2f;">
+                                                    <thead>
+                                                        <tr style="background:#f3f7f5; border-bottom: 1.5px solid #d4e8e2;">
+                                                            <th style="padding:10px;">ID</th>
+                                                            <th style="padding:10px;">Patient Name</th>
+                                                            <th style="padding:10px;">Visit Date</th>
+                                                            <th style="padding:10px;">Chief Complaint</th>
+                                                            <th style="padding:10px;">Diagnosis</th>
+                                                            <th style="padding:10px;">Treatment Plan</th>
+                                                            <th style="padding:10px;">Vitals</th>
+                                                            <th style="padding:10px;">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <% 
+                                                        List<MedicalRecord> medicalRecords = (List<MedicalRecord>) request.getAttribute("medicalRecords");
+                                                        if (medicalRecords != null && !medicalRecords.isEmpty()) {
+                                                            for (MedicalRecord rec : medicalRecords) {
+                                                        %>
+                                                        <tr style="border-bottom: 1px solid #e9efec;">
+                                                            <td style="padding:10px;"><%= rec.getId() %></td>
+                                                            <td style="padding:10px;"><strong><%= rec.getPatientName() %></strong></td>
+                                                            <td style="padding:10px;"><%= rec.getVisitDate() %></td>
+                                                            <td style="padding:10px;"><%= rec.getChiefComplaint() %></td>
+                                                            <td style="padding:10px;"><span style="background:#e0edf8; color:#1a5f9e; padding:2px 8px; border-radius:4px;"><%= rec.getDiagnosis() %></span></td>
+                                                            <td style="padding:10px;"><%= rec.getTreatmentPlan() %></td>
+                                                            <td style="padding:10px;">
+                                                                <small style="color:#5e7c73;">
+                                                                    BP: <%= rec.getVitalsBp() %><br>
+                                                                    Temp: <%= rec.getVitalsTemp() %>°F<br>
+                                                                    Pulse: <%= rec.getVitalsPulse() %> bpm
+                                                                </small>
+                                                            </td>
+                                                            <td style="padding:10px;">
+                                                                <form method="post" action="${pageContext.request.contextPath}/doctor/dashboard" style="display:inline;">
+                                                                    <input type="hidden" name="action" value="deleteMedicalRecord">
+                                                                    <input type="hidden" name="recordId" value="<%= rec.getId() %>">
+                                                                    <button type="submit" style="background:transparent; border:none; color:#c0362b; cursor:pointer; font-weight:bold;">Delete</button>
+                                                                </form>
+                                                            </td>
+                                                        </tr>
+                                                        <% 
+                                                            }
+                                                        } else {
+                                                        %>
+                                                        <tr>
+                                                            <td colspan="8" style="padding:12px; text-align:center; color:#5e7c73;">No patient medical records registered.</td>
+                                                        </tr>
+                                                        <% } %>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <!-- Prescriptions Section -->
+                                        <p class="section-label" style="margin-top: 32px;">E-Prescribing (Prescriptions)</p>
+                                        <div class="panel" id="prescriptions" style="margin-bottom: 24px; padding: 24px; background: #ffffff; border-radius: 16px; border: 1.5px solid #d4e8e2;">
+                                            <h2>E-Prescriptions Manager</h2>
+                                            
+                                            <!-- Form to create prescription -->
+                                            <div style="background: #fbfdfc; padding: 18px; border-radius: 12px; border: 1px solid #e0ebf0; margin-bottom: 20px;">
+                                                <h3 style="margin-bottom: 12px; font-size:15px; color:#0d6b55;">Write New Prescription</h3>
+                                                <form method="post" action="${pageContext.request.contextPath}/doctor/dashboard" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+                                                    <input type="hidden" name="action" value="createPrescription">
+                                                    <div>
+                                                        <label style="font-size:12px; font-weight:600; color:#5e7c73;">Select Patient</label>
+                                                        <select name="patientId" required style="width:100%; border:1.5px solid #cfe0da; padding:6px; border-radius:8px; background: #fff !important; color: #0f3c2f !important;">
+                                                            <% 
+                                                            if (patientsTable != null) {
+                                                                for (User p : patientsTable) {
+                                                            %>
+                                                            <option value="<%= p.getId() %>"><%= p.getFullName() %> (<%= p.getEmail() %>)</option>
+                                                            <% 
+                                                                }
+                                                            } 
+                                                            %>
+                                                        </select>
+                                                    </div>
+                                                    <div>
+                                                        <label style="font-size:12px; font-weight:600; color:#5e7c73;">Select Medication</label>
+                                                        <select name="medicationId" required style="width:100%; border:1.5px solid #cfe0da; padding:6px; border-radius:8px; background: #fff !important; color: #0f3c2f !important;">
+                                                            <% 
+                                                            List<Medication> medications = (List<Medication>) request.getAttribute("medications");
+                                                            if (medications != null) {
+                                                                for (Medication m : medications) {
+                                                            %>
+                                                            <option value="<%= m.getId() %>"><%= m.getName() %> (<%= m.getDosageForm() %> - <%= m.getUnit() %>)</option>
+                                                            <% 
+                                                                }
+                                                            } 
+                                                            %>
+                                                        </select>
+                                                    </div>
+                                                    <div>
+                                                        <label style="font-size:12px; font-weight:600; color:#5e7c73;">Dosage</label>
+                                                        <input type="text" name="dosage" placeholder="e.g. 1 tablet" required style="width:100%; border:1.5px solid #cfe0da; padding:6px; border-radius:8px; background: #fff !important; color: #0f3c2f !important;">
+                                                    </div>
+                                                    <div>
+                                                        <label style="font-size:12px; font-weight:600; color:#5e7c73;">Frequency</label>
+                                                        <input type="text" name="frequency" placeholder="e.g. Twice daily" required style="width:100%; border:1.5px solid #cfe0da; padding:6px; border-radius:8px; background: #fff !important; color: #0f3c2f !important;">
+                                                    </div>
+                                                    <div>
+                                                        <label style="font-size:12px; font-weight:600; color:#5e7c73;">Duration (Days)</label>
+                                                        <input type="number" name="durationDays" min="1" value="7" required style="width:100%; border:1.5px solid #cfe0da; padding:6px; border-radius:8px; background: #fff !important; color: #0f3c2f !important;">
+                                                    </div>
+                                                    <div>
+                                                        <label style="font-size:12px; font-weight:600; color:#5e7c73;">Quantity</label>
+                                                        <input type="number" name="quantity" min="1" value="14" required style="width:100%; border:1.5px solid #cfe0da; padding:6px; border-radius:8px; background: #fff !important; color: #0f3c2f !important;">
+                                                    </div>
+                                                    <div style="grid-column: span 2;">
+                                                        <label style="font-size:12px; font-weight:600; color:#5e7c73;">Special Instructions</label>
+                                                        <input type="text" name="instructions" placeholder="e.g. Take after meals" style="width:100%; border:1.5px solid #cfe0da; padding:6px; border-radius:8px; background: #fff !important; color: #0f3c2f !important;">
+                                                    </div>
+                                                    <div>
+                                                        <label style="font-size:12px; font-weight:600; color:#5e7c73;">Rx Notes</label>
+                                                        <input type="text" name="notes" placeholder="Diagnosis code or internal note" style="width:100%; border:1.5px solid #cfe0da; padding:6px; border-radius:8px; background: #fff !important; color: #0f3c2f !important;">
+                                                    </div>
+                                                    <div style="grid-column: 1 / -1; text-align: right; margin-top: 8px;">
+                                                        <button type="submit" style="background:#0d6b55; color:#fff; border:none; padding: 10px 24px; border-radius:8px; font-weight:bold; cursor:pointer;">Issue Prescription</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                            <!-- Table of prescriptions -->
+                                            <div style="overflow-x:auto;">
+                                                <table style="width:100%; border-collapse:collapse; text-align:left; font-size:13px; color:#0f3c2f;">
+                                                    <thead>
+                                                        <tr style="background:#f3f7f5; border-bottom: 1.5px solid #d4e8e2;">
+                                                            <th style="padding:10px;">Rx ID</th>
+                                                            <th style="padding:10px;">Patient Name</th>
+                                                            <th style="padding:10px;">Issued Date</th>
+                                                            <th style="padding:10px;">Expiry Date</th>
+                                                            <th style="padding:10px;">Medication & Instructions</th>
+                                                            <th style="padding:10px;">Status</th>
+                                                            <th style="padding:10px;">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <% 
+                                                        List<Prescription> prescriptions = (List<Prescription>) request.getAttribute("prescriptions");
+                                                        if (prescriptions != null && !prescriptions.isEmpty()) {
+                                                            for (Prescription rx : prescriptions) {
+                                                        %>
+                                                        <tr style="border-bottom: 1px solid #e9efec;">
+                                                            <td style="padding:10px;">#<%= rx.getId() %></td>
+                                                            <td style="padding:10px;"><strong><%= rx.getPatientName() %></strong></td>
+                                                            <td style="padding:10px;"><%= rx.getIssuedDate() %></td>
+                                                            <td style="padding:10px;"><%= rx.getExpiryDate() %></td>
+                                                            <td style="padding:10px;">
+                                                                <% if (rx.getItems() != null) { 
+                                                                    for (PrescriptionItem item : rx.getItems()) { %>
+                                                                    <div style="margin-bottom: 6px;">
+                                                                        <strong><%= item.getMedicationName() %></strong> - 
+                                                                        <%= item.getDosage() %>, <%= item.getFrequency() %> for <%= item.getDurationDays() %> days (Qty: <%= item.getQuantity() %>)<br>
+                                                                        <small style="color:#5e7c73;"><%= item.getInstructions() %></small>
+                                                                    </div>
+                                                                <% } } %>
+                                                            </td>
+                                                            <td style="padding:10px;"><span style="background:#e0edf8; color:#1a5f9e; padding:2px 8px; border-radius:4px;"><%= rx.getStatus() %></span></td>
+                                                            <td style="padding:10px;">
+                                                                <form method="post" action="${pageContext.request.contextPath}/doctor/dashboard" style="display:inline;">
+                                                                    <input type="hidden" name="action" value="deletePrescription">
+                                                                    <input type="hidden" name="prescriptionId" value="<%= rx.getId() %>">
+                                                                    <button type="submit" style="background:transparent; border:none; color:#c0362b; cursor:pointer; font-weight:bold;">Delete</button>
+                                                                </form>
+                                                            </td>
+                                                        </tr>
+                                                        <% 
+                                                            }
+                                                        } else {
+                                                        %>
+                                                        <tr>
+                                                            <td colspan="7" style="padding:12px; text-align:center; color:#5e7c73;">No prescriptions issued.</td>
+                                                        </tr>
+                                                        <% } %>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
 
