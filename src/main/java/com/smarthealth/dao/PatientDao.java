@@ -5,8 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
+
 
 import com.smarthealth.model.PatientProfile;
 import com.smarthealth.util.DBConnection;
