@@ -4,8 +4,8 @@ public class PatientProfile {
     private int userId;
     private String phone;
     private String address;
-    private String gender;
     private Integer age;
+    private String gender;
 
     public int getUserId() {
         return userId;
