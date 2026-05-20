@@ -670,7 +670,196 @@
                                 .scroll-fab:hover {
                                     background: #0b5c48;
                                 }
-                            </style>
+                            
+                                 /* ── Mindblowing Success Popup Styles ── */
+                                 .success-popup-overlay {
+                                     position: fixed;
+                                     top: 0;
+                                     left: 0;
+                                     width: 100%;
+                                     height: 100%;
+                                     background: rgba(10, 46, 34, 0.45);
+                                     backdrop-filter: blur(12px);
+                                     -webkit-backdrop-filter: blur(12px);
+                                     display: flex;
+                                     align-items: center;
+                                     justify-content: center;
+                                     z-index: 2000;
+                                     opacity: 0;
+                                     pointer-events: none;
+                                     transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                                 }
+
+                                 .success-popup-overlay.active {
+                                     opacity: 1;
+                                     pointer-events: auto;
+                                 }
+
+                                 .success-popup-card {
+                                     background: rgba(255, 255, 255, 0.95);
+                                     border: 1px solid rgba(255, 255, 255, 0.4);
+                                     box-shadow: 0 24px 64px rgba(13, 107, 85, 0.2), 
+                                                 inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+                                     border-radius: 24px;
+                                     padding: 36px 32px;
+                                     width: 90%;
+                                     max-width: 420px;
+                                     text-align: center;
+                                     position: relative;
+                                     overflow: hidden;
+                                     transform: scale(0.9) translateY(20px);
+                                     transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+                                 }
+
+                                 .success-popup-overlay.active .success-popup-card {
+                                     transform: scale(1) translateY(0);
+                                 }
+
+                                 /* 3D Animated Checkmark */
+                                 .success-icon-wrapper {
+                                     width: 80px;
+                                     height: 80px;
+                                     border-radius: 50%;
+                                     background: linear-gradient(135deg, #e8f5ee 0%, #c5e8f2 100%);
+                                     display: flex;
+                                     align-items: center;
+                                     justify-content: center;
+                                     margin: 0 auto 20px;
+                                     box-shadow: 0 10px 20px rgba(13, 107, 85, 0.12);
+                                     position: relative;
+                                 }
+
+                                 .success-svg {
+                                     width: 52px;
+                                     height: 52px;
+                                     display: block;
+                                 }
+
+                                 .success-circle {
+                                     stroke-dasharray: 166;
+                                     stroke-dashoffset: 166;
+                                     stroke-width: 3;
+                                     stroke-miterlimit: 10;
+                                     stroke: #0d6b55;
+                                     fill: none;
+                                     animation: stroke-circle 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+                                 }
+
+                                 .success-check {
+                                     transform-origin: 50% 50%;
+                                     stroke-dasharray: 48;
+                                     stroke-dashoffset: 48;
+                                     stroke-width: 3;
+                                     stroke: #0d6b55;
+                                     stroke-linecap: round;
+                                     animation: stroke-check 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.6s forwards;
+                                 }
+
+                                 @keyframes stroke-circle {
+                                     100% {
+                                         stroke-dashoffset: 0;
+                                     }
+                                 }
+
+                                 @keyframes stroke-check {
+                                     100% {
+                                         stroke-dashoffset: 0;
+                                     }
+                                 }
+
+                                 .success-popup-card h3 {
+                                     font-size: 22px;
+                                     font-weight: 800;
+                                     color: #0a2e22;
+                                     margin-bottom: 8px;
+                                     letter-spacing: -0.02em;
+                                 }
+
+                                 .popup-subtitle {
+                                     font-size: 13.5px;
+                                     color: #4a7a6a;
+                                     line-height: 1.4;
+                                     margin-bottom: 24px;
+                                 }
+
+                                 /* Details Card */
+                                 .appointment-details-card {
+                                     background: linear-gradient(135deg, #f3f8f6 0%, #eaf4ee 100%);
+                                     border: 1px solid #d4e8e2;
+                                     border-radius: 16px;
+                                     padding: 16px;
+                                     margin-bottom: 28px;
+                                     display: flex;
+                                     flex-direction: column;
+                                     gap: 10px;
+                                     text-align: left;
+                                 }
+
+                                 .detail-row {
+                                     display: flex;
+                                     justify-content: space-between;
+                                     align-items: center;
+                                     font-size: 13px;
+                                 }
+
+                                 .detail-label {
+                                     color: #5e7c73;
+                                     font-weight: 600;
+                                     font-size: 11px;
+                                     text-transform: uppercase;
+                                     letter-spacing: 0.05em;
+                                 }
+
+                                 .detail-value {
+                                     color: #0a2e22;
+                                     font-weight: 700;
+                                 }
+
+                                 /* Dynamic Confetti */
+                                 .confetti-container {
+                                     position: absolute;
+                                     top: 0;
+                                     left: 0;
+                                     width: 100%;
+                                     height: 100%;
+                                     pointer-events: none;
+                                     z-index: 10;
+                                 }
+
+                                 .confetti-piece {
+                                     position: absolute;
+                                     width: 8px;
+                                     height: 8px;
+                                     border-radius: 50%;
+                                     opacity: 0;
+                                 }
+
+                                 /* Interactive Action Button */
+                                 .popup-btn {
+                                     width: 100%;
+                                     padding: 12px;
+                                     background: linear-gradient(135deg, #0d6b55 0%, #158f73 100%);
+                                     color: #fff !important;
+                                     border: 0;
+                                     border-radius: 12px;
+                                     font-size: 14px;
+                                     font-weight: 800;
+                                     cursor: pointer;
+                                     font-family: inherit;
+                                     box-shadow: 0 8px 20px rgba(13, 107, 85, 0.25);
+                                     transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+                                 }
+
+                                 .popup-btn:hover {
+                                     transform: translateY(-2px);
+                                     box-shadow: 0 12px 24px rgba(13, 107, 85, 0.35);
+                                     filter: brightness(1.05);
+                                 }
+
+                                 .popup-btn:active {
+                                     transform: translateY(0);
+                                 }
+                             </style>
                         </head>
 
                         <body>
@@ -947,19 +1136,244 @@
                                                                         <%= a.getDoctorName() %>
                                                                     </div>
                                                                     <div class="hist-meta">
-                                                                        <%= a.getReason() !=null ? a.getReason()
-                                                                            : "General Visit" %>
+                                                                        <%= a.getReason() !=null ? a.getReason() : "General Visit" %>
                                                                     </div>
                                                                 </div>
                                                                 <span class="hist-badge <%= hbClass %>">
-                                                                    <%= status.substring(0,1).toUpperCase() +
-                                                                        status.substring(1) %>
+                                                                    <%= status.substring(0,1).toUpperCase() + status.substring(1) %>
                                                                 </span>
                                                             </div>
                                                             <% } } else { %>
-                                                                <p style="color:#5e7c73;font-size:13.5px;">No
-                                                                    appointment history yet.</p>
+                                                                <p style="color:#5e7c73;font-size:13.5px;">No appointment history yet.</p>
                                                                 <% } %>
+                                                     </div>
+                                                 </div>
+
+                                                <!-- Medical Records Section -->
+                                                <p class="section-label" style="margin-top: 32px;">Clinical Records</p>
+                                                <div class="panel" id="medical-records" style="margin-bottom: 24px; padding: 24px; background: #ffffff; border-radius: 16px; border: 1.5px solid #d4e8e2;">
+                                                    <h2>My Medical Records</h2>
+                                                    <div style="overflow-x:auto;">
+                                                        <table style="width:100%; border-collapse:collapse; text-align:left; font-size:13px; color:#0f3c2f;">
+                                                            <thead>
+                                                                <tr style="background:#f3f7f5; border-bottom: 1.5px solid #d4e8e2;">
+                                                                    <th style="padding:10px;">Visit Date</th>
+                                                                    <th style="padding:10px;">Doctor</th>
+                                                                    <th style="padding:10px;">Chief Complaint</th>
+                                                                    <th style="padding:10px;">Diagnosis</th>
+                                                                    <th style="padding:10px;">Treatment Plan</th>
+                                                                    <th style="padding:10px;">Vitals</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <% 
+                                                                List<MedicalRecord> medicalRecords = (List<MedicalRecord>) request.getAttribute("medicalRecords");
+                                                                if (medicalRecords != null && !medicalRecords.isEmpty()) {
+                                                                    for (MedicalRecord rec : medicalRecords) {
+                                                                %>
+                                                                <tr style="border-bottom: 1px solid #e9efec;">
+                                                                    <td style="padding:10px;"><%= rec.getVisitDate() %></td>
+                                                                    <td style="padding:10px;"><strong><%= rec.getDoctorName() != null ? rec.getDoctorName() : "Doctor" %></strong></td>
+                                                                    <td style="padding:10px;"><%= rec.getChiefComplaint() %></td>
+                                                                    <td style="padding:10px;"><span style="background:#e0edf8; color:#1a5f9e; padding:2px 8px; border-radius:4px;"><%= rec.getDiagnosis() %></span></td>
+                                                                    <td style="padding:10px;"><%= rec.getTreatmentPlan() %></td>
+                                                                    <td style="padding:10px;">
+                                                                        <small style="color:#5e7c73;">
+                                                                            BP: <%= rec.getVitalsBp() %><br>
+                                                                            Temp: <%= rec.getVitalsTemp() %>°F<br>
+                                                                            Pulse: <%= rec.getVitalsPulse() %> bpm
+                                                                        </small>
+                                                                    </td>
+                                                                </tr>
+                                                                <% 
+                                                                    }
+                                                                } else {
+                                                                %>
+                                                                <tr>
+                                                                    <td colspan="6" style="padding:12px; text-align:center; color:#5e7c73;">No medical records found.</td>
+                                                                </tr>
+                                                                <% } %>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Prescriptions Section -->
+                                                <p class="section-label" style="margin-top: 32px;">Active Prescriptions</p>
+                                                <div class="panel" id="prescriptions" style="margin-bottom: 24px; padding: 24px; background: #ffffff; border-radius: 16px; border: 1.5px solid #d4e8e2;">
+                                                    <h2>My Prescriptions</h2>
+                                                    <div style="overflow-x:auto;">
+                                                        <table style="width:100%; border-collapse:collapse; text-align:left; font-size:13px; color:#0f3c2f;">
+                                                            <thead>
+                                                                <tr style="background:#f3f7f5; border-bottom: 1.5px solid #d4e8e2;">
+                                                                    <th style="padding:10px;">Rx ID</th>
+                                                                    <th style="padding:10px;">Doctor</th>
+                                                                    <th style="padding:10px;">Issued Date</th>
+                                                                    <th style="padding:10px;">Expiry Date</th>
+                                                                    <th style="padding:10px;">Medications & Directions</th>
+                                                                    <th style="padding:10px;">Status</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <% 
+                                                                List<Prescription> prescriptions = (List<Prescription>) request.getAttribute("prescriptions");
+                                                                if (prescriptions != null && !prescriptions.isEmpty()) {
+                                                                    for (Prescription rx : prescriptions) {
+                                                                %>
+                                                                <tr style="border-bottom: 1px solid #e9efec;">
+                                                                    <td style="padding:10px;">#<%= rx.getId() %></td>
+                                                                    <td style="padding:10px;"><strong><%= rx.getDoctorName() != null ? rx.getDoctorName() : "Doctor" %></strong></td>
+                                                                    <td style="padding:10px;"><%= rx.getIssuedDate() %></td>
+                                                                    <td style="padding:10px;"><%= rx.getExpiryDate() %></td>
+                                                                    <td style="padding:10px;">
+                                                                        <% if (rx.getItems() != null) { 
+                                                                            for (PrescriptionItem item : rx.getItems()) { %>
+                                                                            <div style="margin-bottom: 6px;">
+                                                                                <strong><%= item.getMedicationName() %></strong> - 
+                                                                                <%= item.getDosage() %>, <%= item.getFrequency() %> for <%= item.getDurationDays() %> days (Qty: <%= item.getQuantity() %>)<br>
+                                                                                <small style="color:#5e7c73;"><%= item.getInstructions() %></small>
+                                                                            </div>
+                                                                        <% } } %>
+                                                                    </td>
+                                                                    <td style="padding:10px;"><span style="background:#e0edf8; color:#1a5f9e; padding:2px 8px; border-radius:4px;"><%= rx.getStatus() %></span></td>
+                                                                </tr>
+                                                                <% 
+                                                                    }
+                                                                } else {
+                                                                %>
+                                                                <tr>
+                                                                    <td colspan="6" style="padding:12px; text-align:center; color:#5e7c73;">No prescriptions found.</td>
+                                                                </tr>
+                                                                <% } %>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Insurance & Billing Sections in a two-column layout -->
+                                                <div class="two-col" style="margin-top: 32px;">
+                                                    <!-- Insurance Policy -->
+                                                    <div class="panel" id="insurance" style="padding: 24px; background: #ffffff; border-radius: 16px; border: 1.5px solid #d4e8e2;">
+                                                        <h2>Insurance Policy</h2>
+                                                        <% 
+                                                        List<Insurance> insList = (List<Insurance>) request.getAttribute("insuranceList");
+                                                        Insurance activeIns = (insList != null && !insList.isEmpty()) ? insList.get(0) : null;
+                                                        if (activeIns != null) {
+                                                        %>
+                                                        <div style="background: #e8f5ee; border: 1px solid #cfe0da; border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+                                                            <div style="font-size: 11px; font-weight:700; color:#5f9e8a; text-transform: uppercase;">Active Coverage</div>
+                                                            <div style="font-size: 20px; font-weight:800; color:#0d6b55; margin-top: 4px;"><%= activeIns.getProviderName() %></div>
+                                                            <div style="margin-top: 8px; font-size:13px; color:#0f3c2f;">
+                                                                <strong>Policy No:</strong> <%= activeIns.getPolicyNumber() %><br>
+                                                                <strong>Group No:</strong> <%= activeIns.getGroupNumber() != null ? activeIns.getGroupNumber() : "—" %><br>
+                                                                <strong>Holder:</strong> <%= activeIns.getHolderName() != null ? activeIns.getHolderName() : "—" %><br>
+                                                                <strong>Coverage Limit:</strong> $<%= activeIns.getCoverageLimit() %><br>
+                                                                <strong>Validity:</strong> <%= activeIns.getValidFrom() %> to <%= activeIns.getValidTo() != null ? activeIns.getValidTo() : "Present" %>
+                                                            </div>
+                                                        </div>
+                                                        <form method="post" action="${pageContext.request.contextPath}/patient/dashboard">
+                                                            <input type="hidden" name="action" value="deleteInsurance">
+                                                            <input type="hidden" name="insuranceId" value="<%= activeIns.getId() %>">
+                                                            <button type="submit" style="width:100%; padding:10px; background:#c0362b; color:#fff; border:none; border-radius:10px; font-weight:700; cursor:pointer;">
+                                                                Deregister Policy
+                                                            </button>
+                                                        </form>
+                                                        <% } else { %>
+                                                        <p style="color:#5e7c73; font-size:13.5px; margin-bottom: 16px;">No insurance policy registered.</p>
+                                                        
+                                                        <form method="post" action="${pageContext.request.contextPath}/patient/dashboard" style="display: flex; flex-direction: column; gap: 10px;">
+                                                            <input type="hidden" name="action" value="addInsurance">
+                                                            <div>
+                                                                <label style="font-size:11px; font-weight:600; color:#5e7c73;">Insurance Company</label>
+                                                                <input type="text" name="providerName" placeholder="e.g. MetLife" required style="width:100%; border:1.5px solid #cfe0da; padding:8px; border-radius:8px; background: #fff !important; color: #0f3c2f !important;">
+                                                            </div>
+                                                            <div>
+                                                                <label style="font-size:11px; font-weight:600; color:#5e7c73;">Policy Number</label>
+                                                                <input type="text" name="policyNumber" placeholder="e.g. POL-992384" required style="width:100%; border:1.5px solid #cfe0da; padding:8px; border-radius:8px; background: #fff !important; color: #0f3c2f !important;">
+                                                            </div>
+                                                            <div>
+                                                                <label style="font-size:11px; font-weight:600; color:#5e7c73;">Group Number</label>
+                                                                <input type="text" name="groupNumber" placeholder="e.g. GRP-445" required style="width:100%; border:1.5px solid #cfe0da; padding:8px; border-radius:8px; background: #fff !important; color: #0f3c2f !important;">
+                                                            </div>
+                                                            <div>
+                                                                <label style="font-size:11px; font-weight:600; color:#5e7c73;">Policy Holder Name</label>
+                                                                <input type="text" name="holderName" placeholder="e.g. John Doe" required style="width:100%; border:1.5px solid #cfe0da; padding:8px; border-radius:8px; background: #fff !important; color: #0f3c2f !important;">
+                                                            </div>
+                                                            <div style="display: flex; gap: 10px;">
+                                                                <div style="flex: 1;">
+                                                                    <label style="font-size:11px; font-weight:600; color:#5e7c73;">Valid From</label>
+                                                                    <input type="date" name="validFrom" required style="width:100%; border:1.5px solid #cfe0da; padding:8px; border-radius:8px; background: #fff !important; color: #0f3c2f !important;">
+                                                                </div>
+                                                                <div style="flex: 1;">
+                                                                    <label style="font-size:11px; font-weight:600; color:#5e7c73;">Valid To</label>
+                                                                    <input type="date" name="validTo" required style="width:100%; border:1.5px solid #cfe0da; padding:8px; border-radius:8px; background: #fff !important; color: #0f3c2f !important;">
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <label style="font-size:11px; font-weight:600; color:#5e7c73;">Coverage Limit ($)</label>
+                                                                <input type="number" name="coverageLimit" value="5000" min="0" required style="width:100%; border:1.5px solid #cfe0da; padding:8px; border-radius:8px; background: #fff !important; color: #0f3c2f !important;">
+                                                            </div>
+                                                            <button type="submit" style="width:100%; padding:10px; background:#0d6b55; color:#fff; border:none; border-radius:10px; font-weight:700; cursor:pointer; margin-top: 4px;">
+                                                                Register Policy
+                                                            </button>
+                                                        </form>
+                                                        <% } %>
+                                                    </div>
+
+                                                    <!-- Invoices & Bills -->
+                                                    <div class="panel" id="billing" style="padding: 24px; background: #ffffff; border-radius: 16px; border: 1.5px solid #d4e8e2;">
+                                                        <h2>Invoices & Bills</h2>
+                                                        <div style="overflow-x:auto;">
+                                                            <table style="width:100%; border-collapse:collapse; text-align:left; font-size:13px; color:#0f3c2f;">
+                                                                <thead>
+                                                                    <tr style="background:#f3f7f5; border-bottom: 1.5px solid #d4e8e2;">
+                                                                        <th style="padding:8px;">Date</th>
+                                                                        <th style="padding:8px;">Description</th>
+                                                                        <th style="padding:8px;">Amount</th>
+                                                                        <th style="padding:8px;">Status</th>
+                                                                        <th style="padding:8px;">Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <% 
+                                                                    List<Invoice> invoices = (List<Invoice>) request.getAttribute("invoices");
+                                                                    if (invoices != null && !invoices.isEmpty()) {
+                                                                        for (Invoice inv : invoices) {
+                                                                            boolean isPaid = "Paid".equalsIgnoreCase(inv.getPaymentStatus());
+                                                                    %>
+                                                                    <tr style="border-bottom: 1px solid #e9efec;">
+                                                                        <td style="padding:8px;"><%= inv.getIssuedDate() %></td>
+                                                                        <td style="padding:8px;"><%= inv.getNotes() != null ? inv.getNotes() : "Medical Services" %></td>
+                                                                        <td style="padding:8px;"><strong>$<%= inv.getTotal() %></strong></td>
+                                                                        <td style="padding:8px;">
+                                                                            <span style="background: <%= isPaid ? "#e6f5ef" : "#fdecea" %>; color: <%= isPaid ? "#0d6b55" : "#a32d2d" %>; padding:2px 8px; border-radius:4px; font-weight:bold;">
+                                                                                <%= inv.getPaymentStatus() %>
+                                                                            </span>
+                                                                        </td>
+                                                                        <td style="padding:8px;">
+                                                                            <% if (!isPaid) { %>
+                                                                            <form method="post" action="${pageContext.request.contextPath}/patient/dashboard">
+                                                                                <input type="hidden" name="action" value="payInvoice">
+                                                                                <input type="hidden" name="invoiceId" value="<%= inv.getId() %>">
+                                                                                <input type="hidden" name="paymentMethod" value="Card">
+                                                                                <button type="submit" style="background:#de7b0f; color:#fff; border:none; padding:4px 10px; border-radius:6px; font-weight:bold; cursor:pointer;">Pay</button>
+                                                                            </form>
+                                                                            <% } else { %>
+                                                                            <span style="color:#5e7c73; font-style:italic;">N/A</span>
+                                                                            <% } %>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <% 
+                                                                        }
+                                                                    } else {
+                                                                    %>
+                                                                    <tr>
+                                                                        <td colspan="5" style="padding:12px; text-align:center; color:#5e7c73;">No bills or invoices issued.</td>
+                                                                    </tr>
+                                                                    <% } %>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
                                                     </div>
                                                 </div>
 
@@ -974,7 +1388,33 @@
                                 </svg>
                             </button>
 
-                            <script>
+                            <!-- ── Success Popup Overlay ── -->
+                             <div class="success-popup-overlay" id="successPopup">
+                                 <div class="success-popup-card">
+                                     <div class="confetti-container" id="confettiContainer"></div>
+                                     <div class="success-icon-wrapper">
+                                         <svg class="success-svg" viewBox="0 0 52 52">
+                                             <circle class="success-circle" cx="26" cy="26" r="25" fill="none"/>
+                                             <path class="success-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                                         </svg>
+                                     </div>
+                                     <h3>Booking Confirmed!</h3>
+                                     <p class="popup-subtitle">Your appointment has been successfully scheduled.</p>
+                                     <div class="appointment-details-card">
+                                         <div class="detail-row">
+                                             <span class="detail-label">Doctor</span>
+                                             <span class="detail-value" id="popupDoctor">-</span>
+                                         </div>
+                                         <div class="detail-row">
+                                             <span class="detail-label">Date</span>
+                                             <span class="detail-value" id="popupDate">-</span>
+                                         </div>
+                                     </div>
+                                     <button class="popup-btn" id="popupCloseBtn">Acknowledge & Continue</button>
+                                 </div>
+                             </div>
+
+                             <script>
                                 /* ── Animate profile progress bar ── */
                                 (function () {
                                     var bar = document.getElementById("progBar");
@@ -991,7 +1431,115 @@
                                         }, 16);
                                     }, 500);
                                 })();
-                            </script>
+                            
+                                 /* ── Booking Confirmation & Success Pop-up Handler ── */
+                                 (function () {
+                                     // Submit listener on booking form to set sessionStorage flags
+                                     var bookForm = document.getElementById("bookForm");
+                                     if (bookForm) {
+                                         bookForm.addEventListener("submit", function() {
+                                             sessionStorage.setItem("justBooked", "true");
+                                             var docSelect = document.getElementById("doctorId");
+                                             var docName = docSelect.options[docSelect.selectedIndex].text;
+                                             sessionStorage.setItem("bookedDoctor", docName);
+                                             
+                                             var dateVal = document.getElementById("appointmentDate").value;
+                                             sessionStorage.setItem("bookedDate", dateVal);
+                                         });
+                                     }
+
+                                     // Function to trigger the confetti burst
+                                     function triggerConfetti() {
+                                         var container = document.getElementById("confettiContainer");
+                                         if (!container) return;
+                                         container.innerHTML = "";
+                                         var colors = ["#0d6b55", "#de7b0f", "#3a6e5f", "#4a90e2", "#f5a623", "#7ed321"];
+                                         for (var i = 0; i < 60; i++) {
+                                             var piece = document.createElement("div");
+                                             piece.className = "confetti-piece";
+                                             piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+                                             
+                                             if (Math.random() > 0.5) {
+                                                 piece.style.borderRadius = "0px"; // squares
+                                             }
+                                             
+                                             container.appendChild(piece);
+                                             
+                                             var angle = Math.random() * Math.PI * 2;
+                                             var velocity = 4 + Math.random() * 8;
+                                             var x = 50; 
+                                             var y = 50; 
+                                             
+                                             piece.style.left = x + "%";
+                                             piece.style.top = y + "%";
+                                             
+                                             var transformX = Math.cos(angle) * velocity * 15;
+                                             var transformY = Math.sin(angle) * velocity * 15;
+                                             
+                                             piece.animate([
+                                                 { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+                                                 { transform: 'translate(' + transformX + 'px, ' + transformY + 'px) scale(0)', opacity: 0 }
+                                             ], {
+                                                 duration: 1000 + Math.random() * 1000,
+                                                 easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)',
+                                                 fill: 'forwards'
+                                             });
+                                         }
+                                     }
+
+                                     // Check on page load if booking was successful
+                                     var flashSuccess = "<%= flashSuccess != null ? flashSuccess : "" %>";
+                                     var justBooked = sessionStorage.getItem("justBooked");
+                                     
+                                     if (flashSuccess && justBooked === "true") {
+                                         var docName = sessionStorage.getItem("bookedDoctor") || "Your selected physician";
+                                         var dateVal = sessionStorage.getItem("bookedDate");
+                                         var formattedDate = "Scheduled Date";
+                                         if (dateVal) {
+                                             var dateObj = new Date(dateVal);
+                                             if (!isNaN(dateObj.getTime())) {
+                                                 formattedDate = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                                             } else {
+                                                 formattedDate = dateVal;
+                                             }
+                                         }
+                                         
+                                         document.getElementById("popupDoctor").textContent = docName;
+                                         document.getElementById("popupDate").textContent = formattedDate;
+                                         
+                                         // Hide standard flash success div if present
+                                         var standardFlash = document.querySelector(".flash.success");
+                                         if (standardFlash) {
+                                             standardFlash.style.display = "none";
+                                         }
+                                         
+                                         // Open the popup with a tiny delay for transition smoothness
+                                         setTimeout(function() {
+                                             var popup = document.getElementById("successPopup");
+                                             if (popup) {
+                                                 popup.classList.add("active");
+                                                 triggerConfetti();
+                                             }
+                                         }, 150);
+                                         
+                                         // Clear flags
+                                         sessionStorage.removeItem("justBooked");
+                                         sessionStorage.removeItem("bookedDoctor");
+                                         sessionStorage.removeItem("bookedDate");
+                                     }
+
+                                     // Close button listener
+                                     var closeBtn = document.getElementById("popupCloseBtn");
+                                     if (closeBtn) {
+                                         closeBtn.addEventListener("click", function() {
+                                             var popup = document.getElementById("successPopup");
+                                             if (popup) {
+                                                 popup.classList.remove("active");
+                                             }
+                                         });
+                                     }
+                                 })();
+                             </script>
                         </body>
 
                         </html>
